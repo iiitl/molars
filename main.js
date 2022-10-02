@@ -45,6 +45,7 @@ const span_dropdown = document.getElementById("span-dropdown");
 const opacity_slider = document.getElementById("opacity");
 const wireframe_check = document.getElementById("wireframe-check");
 const webgl = document.getElementById("webgl");
+const lattice_check = document.getElementById("lattice-check");
 // materials
 smooth_materials_teeth = [
   new THREE.MeshPhongMaterial({
@@ -184,6 +185,11 @@ wireframe_check.addEventListener("change", function () {
     last_model.children[1].material.wireframe = false;
   }
 });
+lattice_check.addEventListener("change", () => {
+  if (selected_model) {
+    rebuildFFD(selected_model);
+  }
+})
 exportButton.addEventListener("click", () => {
   applyM4(
     "t8.obj",
@@ -476,7 +482,8 @@ function addCtrlPtMeshes() {
     group.add(ctrl_pt_mesh);
   }
 }
-function addLatticeLines() {
+function addLatticeLines(force = false) {
+  if (!force && !lattice_check.checked) return;
   for (let i = 0; i < ffd.getCtrlPtCount(0) - 1; i++) {
     for (let j = 0; j < ffd.getCtrlPtCount(1); j++) {
       for (let k = 0; k < ffd.getCtrlPtCount(2); k++) {
@@ -487,7 +494,7 @@ function addLatticeLines() {
         );
         let line = new THREE.Line(geometry, lattice_line_material);
         lattice_lines.push(line);
-        // group.add(line);
+        group.add(line);
       }
     }
   }
@@ -501,7 +508,7 @@ function addLatticeLines() {
         );
         let line = new THREE.Line(geometry, lattice_line_material);
         lattice_lines.push(line);
-        // group.add(line);
+        group.add(line);
       }
     }
   }
@@ -516,7 +523,7 @@ function addLatticeLines() {
         let line = new THREE.Line(geometry, lattice_line_material);
 
         lattice_lines.push(line);
-        // group.add(line);
+        group.add(line);
       }
     }
   }
