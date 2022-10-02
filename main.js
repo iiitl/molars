@@ -79,6 +79,20 @@ smooth_materials_jaw = [
   }),
 ];
 
+// helper functions
+var saveData = (function () {
+  var a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style = "display: none";
+  return function (blob, fileName) {
+    let uri = window.URL.createObjectURL(blob)
+    a.href = uri;
+    a.download = fileName;
+    a.click();
+    window.URL.revokeObjectURL(blob);
+  };
+})();
+
 // function calls
 init();
 animate();
@@ -621,21 +635,21 @@ function applyM4(name, matrix) {
         mesh.matrix.copy(matrix);
         mesh.updateMatrixWorld();
         let stl = exporter.parse(mesh);
-        let blob = new Blob([stl]);
-
+        let blob = new Blob([stl], { type: 'text/plain' });
+        saveData(blob, "3dmodel.stl");
         // let link = document.createElement("a");
         // link.href = URL.createObjectURL(blob);
         // link.download = group.children[i].name.split(".")[0] + ".stl";
         // link.click();
 
-        blobToBase64(blob, function (base64Str, filename) {
-          base64Models[group.children[i].name] = base64Str;
-          linkData.push(base64Str);
-          blobIDs.push(group.children[i].name);
-          // console.log(filename);
-          console.log(base64Str);
-          return base64Str;
-        });
+        // blobToBase64(blob, function (base64Str, filename) {
+        //   base64Models[group.children[i].name] = base64Str;
+        //   linkData.push(base64Str);
+        //   blobIDs.push(group.children[i].name);
+        //   // console.log(filename);
+        //   console.log(base64Str);
+        //   return base64Str;
+        // });
       }
     }
   }

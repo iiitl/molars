@@ -5,6 +5,9 @@
   <title>MOLARS</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
 </head>
 <link rel="stylesheet" href="./style.css" />
 
@@ -12,19 +15,19 @@
   <canvas id="webgl"></canvas>
   <div class="upper interactives distribution">
     <div class="opacity-slider">
-      <div class="slider">
-        <label for="wireframe-check">Wireframe Visible : </label>
+      <div class="slider container">
+        <label for="wireframe-check" class="font-color">Wireframe Visible : </label>
         <input type="checkbox" name="wireframe-check" id="wireframe-check" checked>
         <br>
         <label for="wireframe-check">Lattice Visible : </label>
         <input type="checkbox" name="lattice-check" id="lattice-check" checked>
         <br>
-        <label for="opacity">Opacity : </label>
+        <label for="opacity" class="font-color">Opacity : </label>
         <input type="range" id="opacity" name="opacity" min="0.01" max="1" step="0.01" value="1">
       </div>
     </div>
-    <div class="selection">
-      <label id="span_count-label" for="span-dropdown">Deformation Points : </label>
+    <div class="selection container">
+      <label id="span_count-label" for="span-dropdown" class="font-color">Deformation Points : </label>
       <select name="span_dropdown" id="span-dropdown">
         <option value="1">2</option>
         <option value="2" selected>3</option>
@@ -54,7 +57,7 @@
   <script src="ffd.js"></script>
   
   <script>
-    let filenames = ["jaw.obj", "t6.obj", "t7.obj", "t8.obj", "t9.obj", "t10.obj", "t11.obj"]
+    let filenames = ["jaw.obj", "front_incisor1.obj", "front_canine1.obj", "front_canine2.obj", "front_canine3.obj", "front_canine4.obj", "front_incisor2.obj"]
     let folderpath = "./models/"
     var base64Models = {}
     var linkData = new Array();
