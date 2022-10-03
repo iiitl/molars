@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "jsdo": "^4.3.12",
+    "jsdoc": "^3.6.11"
+  }
+}

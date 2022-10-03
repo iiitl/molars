@@ -1,4 +1,32 @@
-// variables
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// variables
 
 let camera,
   scene,
@@ -51,7 +79,7 @@ const lattice_check = document.getElementById("lattice-check");
 
 /**
  * Teeths
- * @typedef {Array<object>} smooth_materials_teeth
+ * @typedef {Array&lt;object>} smooth_materials_teeth
  */
 
 smooth_materials_teeth = [
@@ -72,7 +100,7 @@ smooth_materials_teeth = [
 ];
 /**
  * Teeths
- * @typedef {Array<object>} smooth_materials_jaw
+ * @typedef {Array&lt;object>} smooth_materials_jaw
  */
 smooth_materials_jaw = [
   new THREE.MeshPhongMaterial({
@@ -241,7 +269,7 @@ function touchEndHandle(e) {
   if (selected_model) {
     let clicked_ctrl_point = raycaster.intersectObjects(ctrl_pt_meshes, false);
     if (
-      clicked_ctrl_point.length > 0 &&
+      clicked_ctrl_point.length > 0 &amp;&amp;
       ctrl_pt_mesh_selected != clicked_ctrl_point[0].object
     ) {
       orbit_ctrl.enabled = false;
@@ -256,7 +284,7 @@ function touchEndHandle(e) {
   } else {
     trfm_ctrl.detach(trfm_ctrl.object);
     let intersects = raycaster.intersectObjects(objects, true);
-    if (intersects.length > 0 && intersects[0].object != selected_model) {
+    if (intersects.length > 0 &amp;&amp; intersects[0].object != selected_model) {
       selected_model = intersects[0].object.parent;
       if (!edited_models.includes(selected_model.name)) {
         edited_models.push(selected_model.name);
@@ -289,7 +317,7 @@ function onDocumentMouseMove(event) {
   let hovered_ctrl_points = raycaster.intersectObjects(ctrl_pt_meshes);
   if (
     intersects.length > 0 ||
-    (hovered_ctrl_points.length > 0 &&
+    (hovered_ctrl_points.length > 0 &amp;&amp;
       ctrl_pt_mesh_selected != hovered_ctrl_points[0].object)
   ) {
     renderer.domElement.style.cursor = "pointer";
@@ -304,7 +332,7 @@ function onDocumentMouseDown() {
   if (selected_model) {
     let clicked_ctrl_point = raycaster.intersectObjects(ctrl_pt_meshes, false);
     if (
-      clicked_ctrl_point.length > 0 &&
+      clicked_ctrl_point.length > 0 &amp;&amp;
       ctrl_pt_mesh_selected != clicked_ctrl_point[0].object
     ) {
       orbit_ctrl.enabled = false;
@@ -318,9 +346,9 @@ function onDocumentMouseDown() {
     trfm_ctrl.detach(trfm_ctrl.object);
     let intersects = raycaster.intersectObjects(objects, true);
     if (
-      intersects.length > 0 &&
-      intersects[0].object != selected_model &&
-      intersects[0].object.parent.name !== "jaw.obj" &&
+      intersects.length > 0 &amp;&amp;
+      intersects[0].object != selected_model &amp;&amp;
+      intersects[0].object.parent.name !== "jaw.obj" &amp;&amp;
       intersects[0].object.parent.name.toLowerCase() !== "origin.stl"
     ) {
       selected_model = intersects[0].object.parent;
@@ -346,9 +374,9 @@ function keyDown(event) {
     raycaster.setFromCamera(mouse, camera);
     let intersects = raycaster.intersectObjects(objects, true);
     if (
-      intersects.length > 0 &&
-      intersects[0].object != selected_model &&
-      intersects[0].object.parent.name !== "jaw.obj" &&
+      intersects.length > 0 &amp;&amp;
+      intersects[0].object != selected_model &amp;&amp;
+      intersects[0].object.parent.name !== "jaw.obj" &amp;&amp;
       intersects[0].object.parent.name.toLowerCase() !== "origin.stl"
     ) {
       selected_model = intersects[0].object.parent;
@@ -367,7 +395,7 @@ function onWindowResize() {
 
 function build(model) {
   smooth_verts_undeformed.length = 0;
-  for (let i = 0; i < model.children[0].geometry.vertices.length; i++) {
+  for (let i = 0; i &lt; model.children[0].geometry.vertices.length; i++) {
     let copy_vertex = new THREE.Vector3();
     copy_vertex.copy(model.children[0].geometry.vertices[i]);
     smooth_verts_undeformed.push(copy_vertex);
@@ -378,7 +406,7 @@ function build(model) {
  * Adding model
  */
 function addModels() {
-  for (let i = 0; i < filenames.length; i++) {
+  for (let i = 0; i &lt; filenames.length; i++) {
     let properPath = folderpath + "/" + filenames[i];
     let subd_modifier = new THREE.SubdivisionModifier(0);
     let orig_geom = new THREE.Geometry();
@@ -485,7 +513,7 @@ function rebuildFFD(model) {
   let bbox;
   bbox = new THREE.Box3();
   let modified_verts = [];
-  for (let i = 0; i < model.children[0].geometry.vertices.length; i++) {
+  for (let i = 0; i &lt; model.children[0].geometry.vertices.length; i++) {
     let copy_vertex = new THREE.Vector3();
     copy_vertex.copy(
       model.children[0].geometry.vertices[i].add(model.position)
@@ -500,16 +528,16 @@ function rebuildFFD(model) {
   deform();
 }
 function removeCtrlPtMeshes() {
-  for (let i = 0; i < ctrl_pt_meshes.length; i++)
+  for (let i = 0; i &lt; ctrl_pt_meshes.length; i++)
     group.remove(ctrl_pt_meshes[i]);
   ctrl_pt_meshes.length = 0;
 }
 function removeLatticeLines() {
-  for (let i = 0; i < lattice_lines.length; i++) group.remove(lattice_lines[i]);
+  for (let i = 0; i &lt; lattice_lines.length; i++) group.remove(lattice_lines[i]);
   lattice_lines.length = 0;
 }
 function addCtrlPtMeshes() {
-  for (let i = 0; i < ffd.getTotalCtrlPtCount(); i++) {
+  for (let i = 0; i &lt; ffd.getTotalCtrlPtCount(); i++) {
     let ctrl_pt_mesh = new THREE.Mesh(ctrl_pt_geom, ctrl_pt_material);
     ctrl_pt_mesh.position.copy(ffd.getPosition(i));
     ctrl_pt_mesh.material.ambient = ctrl_pt_mesh.material.color;
@@ -524,10 +552,10 @@ function addCtrlPtMeshes() {
  * @returns {null}
  */
 function addLatticeLines(force = false) {
-  if (!force && !lattice_check.checked) return;
-  for (let i = 0; i < ffd.getCtrlPtCount(0) - 1; i++) {
-    for (let j = 0; j < ffd.getCtrlPtCount(1); j++) {
-      for (let k = 0; k < ffd.getCtrlPtCount(2); k++) {
+  if (!force &amp;&amp; !lattice_check.checked) return;
+  for (let i = 0; i &lt; ffd.getCtrlPtCount(0) - 1; i++) {
+    for (let j = 0; j &lt; ffd.getCtrlPtCount(1); j++) {
+      for (let k = 0; k &lt; ffd.getCtrlPtCount(2); k++) {
         let geometry = new THREE.Geometry();
         geometry.vertices.push(ctrl_pt_meshes[ffd.getIndex(i, j, k)].position);
         geometry.vertices.push(
@@ -539,9 +567,9 @@ function addLatticeLines(force = false) {
       }
     }
   }
-  for (let i = 0; i < ffd.getCtrlPtCount(0); i++) {
-    for (let j = 0; j < ffd.getCtrlPtCount(1) - 1; j++) {
-      for (let k = 0; k < ffd.getCtrlPtCount(2); k++) {
+  for (let i = 0; i &lt; ffd.getCtrlPtCount(0); i++) {
+    for (let j = 0; j &lt; ffd.getCtrlPtCount(1) - 1; j++) {
+      for (let k = 0; k &lt; ffd.getCtrlPtCount(2); k++) {
         let geometry = new THREE.Geometry();
         geometry.vertices.push(ctrl_pt_meshes[ffd.getIndex(i, j, k)].position);
         geometry.vertices.push(
@@ -553,9 +581,9 @@ function addLatticeLines(force = false) {
       }
     }
   }
-  for (let i = 0; i < ffd.getCtrlPtCount(0); i++) {
-    for (let j = 0; j < ffd.getCtrlPtCount(1); j++) {
-      for (let k = 0; k < ffd.getCtrlPtCount(2) - 1; k++) {
+  for (let i = 0; i &lt; ffd.getCtrlPtCount(0); i++) {
+    for (let j = 0; j &lt; ffd.getCtrlPtCount(1); j++) {
+      for (let k = 0; k &lt; ffd.getCtrlPtCount(2) - 1; k++) {
         let geometry = new THREE.Geometry();
         geometry.vertices.push(ctrl_pt_meshes[ffd.getIndex(i, j, k)].position);
         geometry.vertices.push(
@@ -573,12 +601,12 @@ function addLatticeLines(force = false) {
  * Update the lattice 
  */
 function updateLattice() {
-  for (let i = 0; i < ffd.getTotalCtrlPtCount(); i++)
+  for (let i = 0; i &lt; ffd.getTotalCtrlPtCount(); i++)
     ffd.setPosition(i, ctrl_pt_meshes[i].position);
   let line_index = 0;
-  for (let i = 0; i < ffd.getCtrlPtCount(0) - 1; i++) {
-    for (let j = 0; j < ffd.getCtrlPtCount(1); j++) {
-      for (let k = 0; k < ffd.getCtrlPtCount(2); k++) {
+  for (let i = 0; i &lt; ffd.getCtrlPtCount(0) - 1; i++) {
+    for (let j = 0; j &lt; ffd.getCtrlPtCount(1); j++) {
+      for (let k = 0; k &lt; ffd.getCtrlPtCount(2); k++) {
         let line = lattice_lines[line_index++];
         line.geometry.vertices[0] =
           ctrl_pt_meshes[ffd.getIndex(i, j, k)].position;
@@ -588,9 +616,9 @@ function updateLattice() {
       }
     }
   }
-  for (let i = 0; i < ffd.getCtrlPtCount(0); i++) {
-    for (let j = 0; j < ffd.getCtrlPtCount(1) - 1; j++) {
-      for (let k = 0; k < ffd.getCtrlPtCount(2); k++) {
+  for (let i = 0; i &lt; ffd.getCtrlPtCount(0); i++) {
+    for (let j = 0; j &lt; ffd.getCtrlPtCount(1) - 1; j++) {
+      for (let k = 0; k &lt; ffd.getCtrlPtCount(2); k++) {
         let line = lattice_lines[line_index++];
         line.geometry.vertices[0] =
           ctrl_pt_meshes[ffd.getIndex(i, j, k)].position;
@@ -600,9 +628,9 @@ function updateLattice() {
       }
     }
   }
-  for (let i = 0; i < ffd.getCtrlPtCount(0); i++) {
-    for (let j = 0; j < ffd.getCtrlPtCount(1); j++) {
-      for (let k = 0; k < ffd.getCtrlPtCount(2) - 1; k++) {
+  for (let i = 0; i &lt; ffd.getCtrlPtCount(0); i++) {
+    for (let j = 0; j &lt; ffd.getCtrlPtCount(1); j++) {
+      for (let k = 0; k &lt; ffd.getCtrlPtCount(2) - 1; k++) {
         let line = lattice_lines[line_index++];
         line.geometry.vertices[0] =
           ctrl_pt_meshes[ffd.getIndex(i, j, k)].position;
@@ -616,7 +644,7 @@ function updateLattice() {
 function deform() {
   for (
     let i = 0;
-    i < selected_model.children[0].geometry.vertices.length;
+    i &lt; selected_model.children[0].geometry.vertices.length;
     i++
   ) {
     let eval_pt = ffd.evalWorld(smooth_verts_undeformed[i]);
@@ -643,7 +671,7 @@ function unSelect() {
 function doubletap() {
   let now = new Date().getTime();
   let timesince = now - latesttap;
-  if (timesince < 600 && timesince > 0) {
+  if (timesince &lt; 600 &amp;&amp; timesince > 0) {
     unSelect();
   } else {
     latesttap = new Date().getTime();
@@ -664,7 +692,7 @@ function blobToBase64(blob, cb) {
 /**
  * 
  * @param {String} name 
- * @param {Array<number>} matrix 
+ * @param {Array&lt;number>} matrix 
  */
 function applyM4(name, matrix) {
   // webkit.messageHandlers.callback.postMessage("Export-start");
@@ -677,9 +705,9 @@ function applyM4(name, matrix) {
   if (edited_models.length === 0) {
     alert("No models have been edited yet");
   } else {
-    for (let i = 0; i < group.children.length; i++) {
+    for (let i = 0; i &lt; group.children.length; i++) {
       if (
-        edited_models.includes(group.children[i].name) &&
+        edited_models.includes(group.children[i].name) &amp;&amp;
         group.children[i].name === name
       ) {
         mesh = group.children[i];
@@ -709,3 +737,26 @@ function applyM4(name, matrix) {
   // webkit.messageHandlers.callback.postMessage(a.href);
   // webkit.messageHandlers.callback.postMessage("Export-done");
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addLatticeLines">addLatticeLines</a></li><li><a href="global.html#addModels">addModels</a></li><li><a href="global.html#animate">animate</a></li><li><a href="global.html#applyM4">applyM4</a></li><li><a href="global.html#doubletap">doubletap</a></li><li><a href="global.html#onDocumentMouseDown">onDocumentMouseDown</a></li><li><a href="global.html#onDocumentMouseMove">onDocumentMouseMove</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#touchEndHandle">touchEndHandle</a></li><li><a href="global.html#touchStartHandle">touchStartHandle</a></li><li><a href="global.html#updateLattice">updateLattice</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Oct 03 2022 13:24:31 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
