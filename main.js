@@ -49,9 +49,9 @@ const lattice_check = document.getElementById("lattice-check");
 // materials
 smooth_materials_teeth = [
   new THREE.MeshPhongMaterial({
-    color: 0xe9e7e8,
+    color: 0xe6d4c8,
     specular: 0xc4c2c2,
-    shininess: 0.5,
+    shininess: 1,
     side: THREE.DoubleSide,
   }),
   new THREE.MeshBasicMaterial({
@@ -64,10 +64,10 @@ smooth_materials_teeth = [
 ];
 smooth_materials_jaw = [
   new THREE.MeshPhongMaterial({
-    color: 0xe2bfb9,
+    color: 0xe67b8b,
     specular: 0x888688,
     transparent: true,
-    shininess: 1,
+    shininess: 0.5,
     side: THREE.DoubleSide,
   }),
   new THREE.MeshBasicMaterial({
@@ -85,7 +85,7 @@ var saveData = (function () {
   document.body.appendChild(a);
   a.style = "display: none";
   return function (blob, fileName) {
-    let uri = window.URL.createObjectURL(blob)
+    let uri = window.URL.createObjectURL(blob);
     a.href = uri;
     a.download = fileName;
     a.click();
@@ -112,14 +112,14 @@ function init() {
   scene.add(group);
   // lights
 
-  let light = new THREE.PointLight(0x6c6b6b, 1.5);
+  let light = new THREE.PointLight(0xffffff, 0.7);
   light.position.set(0, 500, 200);
   scene.add(light);
-  let light2 = new THREE.PointLight(0x969696, 0.5);
-  light2.position.set(-50, -250, 1000);
+  let light2 = new THREE.PointLight(0xffffff, 0.3);
+  light2.position.set(-1200, 500, 200);
   scene.add(light2);
-  let light3 = new THREE.PointLight(0x969696, 0.5);
-  light3.position.set(50, -250, -1000);
+  let light3 = new THREE.PointLight(0xffffff, 0.5);
+  light3.position.set(0, 500, -1000);
   scene.add(light3);
   let light4 = new THREE.PointLight(0x969696, 0.5);
   light4.position.set(50, -250, 1000);
@@ -189,12 +189,27 @@ lattice_check.addEventListener("change", () => {
   if (selected_model) {
     rebuildFFD(selected_model);
   }
-})
+});
 exportButton.addEventListener("click", () => {
   applyM4(
     "t8.obj",
     new THREE.Matrix4().set(
-      1,0,0,0,0,1.132,0,0,0,0,1.3,0,0,0,0,1
+      1,
+      0,
+      0,
+      0,
+      0,
+      1.132,
+      0,
+      0,
+      0,
+      0,
+      1.3,
+      0,
+      0,
+      0,
+      0,
+      1
     )
   );
 });
@@ -631,11 +646,11 @@ function applyM4(name, matrix) {
       ) {
         mesh = group.children[i];
         mesh.matrixAutoUpdate = false;
-        mesh.matrixWorldUpdate=true;
+        mesh.matrixWorldUpdate = true;
         mesh.matrix.copy(matrix);
         mesh.updateMatrixWorld();
         let stl = exporter.parse(mesh);
-        let blob = new Blob([stl], { type: 'text/plain' });
+        let blob = new Blob([stl], { type: "text/plain" });
         saveData(blob, "3dmodel.stl");
         // let link = document.createElement("a");
         // link.href = URL.createObjectURL(blob);
